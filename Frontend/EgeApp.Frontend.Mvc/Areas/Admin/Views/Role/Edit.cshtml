@@ -1,0 +1,47 @@
+﻿@model EgeApp.Frontend.Mvc.Models.Identity.RoleAssignViewModel
+@{
+    ViewData["PageHeader"] = "";
+   
+}
+<div class="container">
+    <h2 class="mb-4">@Model.Role.Name için Kullanıcı Yönetimi</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="RoleId" />
+
+        <div class="row">
+            <!-- Üyeler -->
+            <div class="col-md-6">
+                <h4>Bu Role Ait Kullanıcılar</h4>
+                <ul class="list-group">
+                    @foreach (var member in Model.Members)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @member.UserName
+                            <input type="checkbox" name="IdsRemove" value="@member.Id" />
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Üye Olmayanlar -->
+            <div class="col-md-6">
+                <h4>Bu Role Ait Olmayan Kullanıcılar</h4>
+                <ul class="list-group">
+                    @foreach (var nonMember in Model.NonMembers)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @nonMember.UserName
+                            <input type="checkbox" name="IdsAdd" value="@nonMember.Id" />
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-4 text-end">
+            <button type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button>
+            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+        </div>
+    </form>
+</div>
